@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flaming Hot Sweepstakes | Pay, Play, Win!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #0d0d0d;
+            --bg-card: #1a1a1a;
+            --bg-card-hover: #242424;
+            --accent: #ff5722;
+            --accent-glow: #ff8a65;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --border: #333;
+            --form-bg: #c8e649;
+            --form-text: #1a1a1a;
+        }
+
+        body {
+            font-family: 'Source Sans 3', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+        }
+
+        .hero p {
+            color: var(--text-secondary);
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-bonus {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* Section Styles */
+        section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .section-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+            display: inline-block;
+        }
+
+        /* Games Grid */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .game-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+
+        .game-card:hover {
+            border-color: var(--accent);
+        }
+
+        .game-image {
+            width: 100%;
+            height: 160px;
+            background: #252525;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            overflow: hidden;
+        }
+
+        .game-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .game-info {
+            padding: 1rem;
+        }
+
+        .game-info h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .game-info a {
+            display: inline-block;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .game-info a:hover {
+            text-decoration: underline;
+        }
+
+        /* How It Works */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+        }
+
+        .step {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+        }
+
+        .step-number {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .step h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .step p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Register Section */
+        .register-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 2rem;
+        }
+
+        .register-section > p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-options {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--accent);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .contact-btn:hover {
+            background: var(--accent-glow);
+        }
+
+        .contact-btn.secondary {
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+        }
+
+        .contact-btn.secondary:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        .contact-btn.telegram {
+            background: #0088cc;
+        }
+
+        .contact-btn.telegram:hover {
+            background: #00a8e8;
+        }
+
+        .contact-btn img {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+        }
+
+        /* Registration Form */
+        .registration-form {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 2rem;
+            margin-top: 1rem;
+        }
+
+        .registration-form h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .registration-form .form-subtitle {
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .registration-form .form-subtitle a {
+            color: var(--accent);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1rem;
+            font-family: 'Oswald', sans-serif;
+            font-weight: 500;
+            background: var(--form-bg);
+            color: var(--form-text);
+            border: none;
+            outline: none;
+        }
+
+        .form-group input::placeholder {
+            color: var(--form-text);
+            opacity: 0.7;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-row .form-group {
+            margin-bottom: 0;
+        }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 1.5rem auto 0;
+            padding: 1rem 2rem;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            background: #333;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .submit-btn:hover {
+            background: #444;
+        }
+
+        /* Thank You Message */
+        .thank-you-message {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .thank-you-message h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.8rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .thank-you-message p {
+            color: var(--text-secondary);
+        }
+
+        /* Deposit Section */
+        .payment-methods {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .payment-badge {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        /* BYOB Section */
+        .byob-section {
+            background: var(--bg-card);
+            border: 1px solid var(--accent);
+            padding: 2rem;
+        }
+
+        .byob-section h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .byob-section p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .byob-section ul {
+            color: var(--text-secondary);
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .byob-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-card);
+            border-top: 1px solid var(--border);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        footer p {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .nav-links {
+                justify-content: center;
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">Flaming Hot Sweepstakes</a>
+            <ul class="nav-links">
+                <li><a href="#games">Games</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#register">Register</a></li>
+                <li><a href="#deposit">Deposit</a></li>
+                <li><a href="#byob">BYOB</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <h1><span>Flaming Hot</span> Sweepstakes</h1>
+        <p>Pay. Play. Win.</p>
+        <div class="hero-bonus">$10 New Player Sign-Up Bonus</div>
+    </header>
+
+    <section id="games">
+        <h2 class="section-title">Our Games</h2>
+        <div class="games-grid">
+
+            <div class="game-card">
+                <div class="game-image">
+                    <img src="images/fire-kirin.jpg" alt="Fire Kirin">
+                </div>
+                <div class="game-info">
+                    <h3>Fire Kirin</h3>
+                    <a href="http://start.firekirin.xyz:8580/index.html" target="_blank">Play Now →</a>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-image">
+                    <img src="images/flaming-hot.jpg" alt="Flaming Hot">
+                </div>
+                <div class="game-info">
+                    <h3>Flaming Hot</h3>
+                    <a href="https://www.flaming-hot.mobi/" target="_blank">Play Now →</a>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-image">
+                    <img src="images/dragon-fire.png" alt="FH Dragon Fire">
+                </div>
+                <div class="game-info">
+                    <h3>FH Dragon Fire</h3>
+                    <a href="http://fhdragonfire.xyz:8580/index.html" target="_blank">Play Now →</a>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-image">
+                    <img src="images/tai-chi-master.jpg" alt="Tai Chi Master">
+                </div>
+                <div class="game-info">
+                    <h3>Tai Chi Master</h3>
+                    <a href="https://www.taichimaster777.com/" target="_blank">Play Now →</a>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-image">
+                    <img src="images/golden-dragon.png" alt="Golden Dragon">
+                </div>
+                <div class="game-info">
+                    <h3>Golden Dragon</h3>
+                    <a href="http://playgd.mobi" target="_blank">Play Now →</a>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-image">
+                    <img src="images/dragon-game-777.png" alt="Dragon Game 777">
+                </div>
+                <div class="game-info">
+                    <h3>Dragon Game 777</h3>
+                    <a href="https://www.dragongame777.com/" target="_blank">Play Now →</a>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-image">
+                    <img src="images/magic-time.png" alt="Magic Time">
+                </div>
+                <div class="game-info">
+                    <h3>Magic Time</h3>
+                    <a href="https://download.mymagictime.com/" target="_blank">Play Now →</a>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-image">
+                    <img src="images/dragon-king.jpg" alt="Legend Fire">
+                </div>
+                <div class="game-info">
+                    <h3>Legend Fire</h3>
+                    <a href="https://www.legendfire.xyz/" target="_blank">Play Now →</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="how-it-works">
+        <h2 class="section-title">How It Works</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">01</div>
+                <h3>Choose Your Game</h3>
+                <p>Browse our selection and pick the game you want to play.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">02</div>
+                <h3>Register</h3>
+                <p>Fill out the form below or contact us via Telegram or Facebook.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">03</div>
+                <h3>Make a Deposit</h3>
+                <p>Fund your account using Cash App, Venmo, Zelle, or other methods.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">04</div>
+                <h3>Play & Win</h3>
+                <p>Enter your credentials and start playing. Cash out your winnings anytime.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="register">
+        <h2 class="section-title">Register</h2>
+        <div class="register-section">
+            <p>Ready to play? Contact us to set up your gamer account. New players get a <strong>$10 bonus</strong> on their first deposit of $20 or more.</p>
+            <div class="contact-options">
+                <a href="https://t.me/+prV21nLzQCQwZjJh" class="contact-btn telegram" target="_blank">
+                    <img src="images/telegram.jpg" alt="Telegram">
+                    Join Telegram
+                </a>
+                <a href="https://www.facebook.com/share/1B1R86uD17/?mibextid=wwXIfr" class="contact-btn secondary" target="_blank">Message on Facebook</a>
+            </div>
+
+            <!-- Registration Form -->
+            <div class="registration-form" id="registrationForm">
+                <h3>New Player Registration</h3>
+                <p class="form-subtitle">
+                    To play, contact us via <a href="https://t.me/+prV21nLzQCQwZjJh" target="_blank">Telegram</a> or <a href="https://www.facebook.com/share/1B1R86uD17/?mibextid=wwXIfr" target="_blank">Facebook</a>.<br>
+                    To register with us, please fill out the form below.
+                </p>
+                <form action="https://formsubmit.co/Flaminghotsweep@gmail.com" method="POST">
+                    <!-- FormSubmit configuration -->
+                    <input type="hidden" name="_subject" value="New Player Registration - Flaming Hot Sweepstakes">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_template" value="table">
+                    
+                    <div class="form-group">
+                        <input type="text" name="name" placeholder="NAME" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="EMAIL ADDRESS" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="tel" name="phone" placeholder="PHONE" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="date" name="birthday" placeholder="BIRTHDAY" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="submit-btn">Continue</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section id="deposit">
+        <h2 class="section-title">Deposit</h2>
+        <p>We accept deposits via the following payment methods. Contact us on Telegram to get started.</p>
+        <div class="payment-methods">
+            <span class="payment-badge">Cash App</span>
+            <span class="payment-badge">Venmo</span>
+            <span class="payment-badge">Zelle</span>
+            <span class="payment-badge">Chime</span>
+            <span class="payment-badge">Apple Pay</span>
+            <span class="payment-badge">Google Pay</span>
+        </div>
+    </section>
+
+    <section id="byob">
+        <h2 class="section-title">Be Your Own Boss</h2>
+        <div class="byob-section">
+            <h3>Become a Sub-Distributor</h3>
+            <p>Want to run your own sweepstakes business? We offer distributor opportunities with our game systems:</p>
+            <ul>
+                <li>FH Dragon Fire (Fire Kirin Remix)</li>
+                <li>Flaming Hot (V Power Remix)</li>
+                <li>Dragon King</li>
+            </ul>
+            <p>Work from home. Set your own hours. Build your own customer base.</p>
+            <a href="https://t.me/+prV21nLzQCQwZjJh" class="contact-btn telegram" target="_blank">
+                <img src="images/telegram.jpg" alt="Telegram">
+                Contact Us for Details
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Flaming Hot Sweepstakes. All rights reserved. | v2.1</p>
+    </footer>
+
+</body>
+</html>
