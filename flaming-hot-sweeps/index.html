@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flaming Hot Sweepstakes | Pay. Play. Win.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+        --char: #0b0705;
+        --char2: #15100b;
+        --char3: #1f1710;
+        --ember: #ff5722;
+        --ember-hot: #ff7a2e;
+        --flame-gold: #ffb43d;
+        --flame-yellow: #ffd76a;
+        --ash: #ccbcae;
+        --smoke: #8a7a6c;
+        --border: #3a2c20;
+        --green: #5cc46a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+        font-family: 'Source Sans 3', sans-serif;
+        background: var(--char);
+        color: var(--ash);
+        line-height: 1.6;
+        overflow-x: hidden;
+    }
+
+    /* Ambient heat glow fixed at the base of the page */
+    body::after {
+        content: "";
+        position: fixed;
+        left: 50%; bottom: -40%;
+        transform: translateX(-50%);
+        width: 120vw; height: 70vh;
+        background: radial-gradient(ellipse at center, rgba(255,87,34,0.12), rgba(255,87,34,0) 65%);
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    .fire-text {
+        background: linear-gradient(180deg, var(--flame-yellow) 0%, var(--flame-gold) 35%, var(--ember-hot) 70%, var(--ember) 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+    }
+
+    /* ---------- NAV ---------- */
+    nav {
+        position: sticky; top: 0; z-index: 50;
+        background: rgba(11,7,5,0.82);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+    }
+    .nav-container {
+        max-width: 1200px; margin: 0 auto; padding: 1rem 2rem;
+        display: flex; justify-content: space-between; align-items: center;
+        flex-wrap: wrap; gap: 1rem;
+    }
+    .logo {
+        font-family: 'Oswald', sans-serif; font-size: 1.5rem; font-weight: 700;
+        text-transform: uppercase; letter-spacing: 1px; text-decoration: none;
+        display: flex; align-items: center; gap: 0.5rem;
+    }
+    .logo .flame-dot {
+        width: 10px; height: 10px; border-radius: 50%;
+        background: var(--ember); box-shadow: 0 0 10px var(--ember), 0 0 20px var(--ember-hot);
+        animation: pulse 1.8s ease-in-out infinite;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; flex-wrap: wrap; }
+    .nav-links a {
+        color: var(--smoke); text-decoration: none; font-weight: 600;
+        font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px;
+        transition: color 0.2s; position: relative;
+    }
+    .nav-links a::after {
+        content: ""; position: absolute; left: 0; bottom: -4px; width: 0; height: 2px;
+        background: var(--ember); box-shadow: 0 0 8px var(--ember);
+        transition: width 0.25s;
+    }
+    .nav-links a:hover { color: var(--flame-gold); }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* ---------- HERO ---------- */
+    .hero {
+        position: relative; z-index: 1;
+        text-align: center; padding: 6rem 2rem 5rem;
+        overflow: hidden;
+        border-bottom: 1px solid var(--border);
+    }
+    .ember-field { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+    .ember {
+        position: absolute; bottom: -10px;
+        width: 4px; height: 4px; border-radius: 50%;
+        background: var(--flame-gold);
+        box-shadow: 0 0 6px var(--ember-hot), 0 0 10px var(--ember);
+        opacity: 0;
+        animation: rise linear infinite;
+    }
+    @keyframes rise {
+        0%   { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
+        8%   { opacity: 0.9; }
+        75%  { opacity: 0.6; }
+        100% { transform: translateY(-100vh) translateX(var(--drift, 20px)) scale(0.3); opacity: 0; }
+    }
+
+    .hero-inner { position: relative; z-index: 2; max-width: 900px; margin: 0 auto; }
+    .hero-eyebrow {
+        font-family: 'Oswald', sans-serif; font-size: 0.85rem; font-weight: 500;
+        text-transform: uppercase; letter-spacing: 6px; color: var(--ember);
+        margin-bottom: 1rem;
+    }
+    .hero h1 {
+        font-family: 'Oswald', sans-serif; font-weight: 700;
+        font-size: clamp(2.8rem, 9vw, 6rem); line-height: 0.95;
+        text-transform: uppercase; letter-spacing: -1px;
+        margin-bottom: 1.25rem;
+        filter: drop-shadow(0 4px 30px rgba(255,87,34,0.45));
+        animation: flicker 4s ease-in-out infinite;
+    }
+    @keyframes flicker {
+        0%, 100% { filter: drop-shadow(0 4px 30px rgba(255,87,34,0.45)); }
+        45%      { filter: drop-shadow(0 4px 42px rgba(255,140,40,0.65)); }
+        55%      { filter: drop-shadow(0 4px 24px rgba(255,87,34,0.40)); }
+        70%      { filter: drop-shadow(0 4px 38px rgba(255,180,61,0.55)); }
+    }
+    .hero-tag {
+        font-family: 'Oswald', sans-serif; font-weight: 500;
+        font-size: clamp(1.1rem, 3vw, 1.6rem); letter-spacing: 4px;
+        text-transform: uppercase; color: var(--ash); margin-bottom: 2rem;
+    }
+    .hero-tag span { color: var(--ember); }
+
+    .hero-bonus {
+        display: inline-flex; align-items: center; gap: 0.6rem;
+        font-family: 'Oswald', sans-serif; font-size: 1.15rem; font-weight: 600;
+        text-transform: uppercase; letter-spacing: 1px; text-decoration: none;
+        color: #1a0f08;
+        background: linear-gradient(180deg, var(--flame-yellow), var(--flame-gold) 50%, var(--ember) 100%);
+        padding: 1rem 2.25rem; border-radius: 999px;
+        box-shadow: 0 0 0 1px rgba(255,180,61,0.4), 0 8px 30px rgba(255,87,34,0.45);
+        transition: transform 0.2s, box-shadow 0.2s;
+        animation: bonusGlow 2.4s ease-in-out infinite;
+    }
+    @keyframes bonusGlow {
+        0%,100% { box-shadow: 0 0 0 1px rgba(255,180,61,0.4), 0 8px 30px rgba(255,87,34,0.40); }
+        50%     { box-shadow: 0 0 0 1px rgba(255,215,106,0.6), 0 8px 44px rgba(255,87,34,0.65); }
+    }
+    .hero-bonus:hover { transform: translateY(-2px) scale(1.02); }
+    .hero-bonus .spark { font-size: 1.3rem; }
+
+    /* ---------- SECTIONS ---------- */
+    section { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
+    .section-head { margin-bottom: 2.5rem; text-align: center; }
+    .section-eyebrow {
+        font-family: 'Oswald', sans-serif; font-size: 0.8rem; font-weight: 500;
+        text-transform: uppercase; letter-spacing: 4px; color: var(--ember);
+        display: block; margin-bottom: 0.4rem;
+    }
+    .section-title {
+        font-family: 'Oswald', sans-serif; font-size: clamp(1.8rem, 5vw, 2.6rem);
+        font-weight: 700; text-transform: uppercase; letter-spacing: -0.5px;
+        line-height: 1;
+    }
+
+    /* ---------- GAMES ---------- */
+    .games-grid {
+        display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.5rem;
+    }
+    .game-card {
+        position: relative; background: var(--char2);
+        border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+        transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+    }
+    .game-card::before {
+        content: ""; position: absolute; inset: 0; border-radius: 10px;
+        padding: 1px; background: linear-gradient(180deg, var(--flame-gold), var(--ember));
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor; mask-composite: exclude;
+        opacity: 0; transition: opacity 0.25s; pointer-events: none;
+    }
+    .game-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 34px rgba(255,87,34,0.28);
+        border-color: transparent;
+    }
+    .game-card:hover::before { opacity: 1; }
+    .game-image { width: 100%; aspect-ratio: 3 / 2; background: var(--char3); overflow: hidden; }
+    .game-image img {
+        width: 100%; height: 100%; object-fit: cover;
+        transition: transform 0.4s, filter 0.4s; filter: saturate(0.95) brightness(0.92);
+    }
+    .game-card:hover .game-image img { transform: scale(1.06); filter: saturate(1.15) brightness(1.05); }
+    .game-info { padding: 1rem 1.1rem 1.2rem; }
+    .game-info h3 {
+        font-family: 'Oswald', sans-serif; font-size: 1.15rem; font-weight: 600;
+        text-transform: uppercase; letter-spacing: 0.3px; color: #fff; margin-bottom: 0.5rem;
+        transition: color 0.2s;
+    }
+    .game-card:hover .game-info h3 { color: var(--flame-gold); }
+    .game-info a {
+        display: inline-flex; align-items: center; gap: 0.35rem;
+        color: var(--ember); text-decoration: none; font-size: 0.9rem; font-weight: 700;
+        text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .game-info a .arrow { transition: transform 0.2s; }
+    .game-card:hover .game-info a .arrow { transform: translateX(4px); }
+
+    /* ---------- HOW IT WORKS ---------- */
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+    .step {
+        background: var(--char2); border: 1px solid var(--border); border-radius: 10px;
+        padding: 1.75rem 1.5rem; position: relative; transition: border-color 0.25s, transform 0.25s;
+    }
+    .step:hover { border-color: var(--ember); transform: translateY(-4px); }
+    .step-number {
+        font-family: 'Oswald', sans-serif; font-size: 3rem; font-weight: 700;
+        line-height: 1; margin-bottom: 0.6rem;
+    }
+    .step h3 {
+        font-family: 'Oswald', sans-serif; font-size: 1.15rem; font-weight: 600;
+        text-transform: uppercase; color: #fff; margin-bottom: 0.4rem;
+    }
+    .step p { color: var(--smoke); font-size: 0.95rem; }
+
+    /* ---------- REGISTER ---------- */
+    .register-shell {
+        background: var(--char2); border: 1px solid var(--border); border-radius: 14px;
+        padding: 2.5rem; position: relative; overflow: hidden;
+    }
+    .register-shell::before {
+        content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+        background: linear-gradient(90deg, var(--ember), var(--flame-gold), var(--ember));
+        box-shadow: 0 0 16px rgba(255,87,34,0.6);
+    }
+    .register-shell > p.lead { color: var(--ash); margin-bottom: 1.75rem; max-width: 640px; }
+    .register-shell > p.lead strong { color: var(--flame-gold); }
+
+    .contact-options { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.25rem; }
+    .contact-btn {
+        display: inline-flex; align-items: center; gap: 0.5rem;
+        padding: 0.85rem 1.6rem; border-radius: 999px; text-decoration: none;
+        font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 1rem;
+        text-transform: uppercase; letter-spacing: 0.5px; transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+    .contact-btn img { width: 22px; height: 22px; border-radius: 50%; }
+    .contact-btn.telegram { background: #229ED9; color: #fff; box-shadow: 0 6px 20px rgba(34,158,217,0.35); }
+    .contact-btn.telegram:hover { transform: translateY(-2px); box-shadow: 0 8px 26px rgba(34,158,217,0.5); }
+    .contact-btn.secondary { background: transparent; border: 1px solid var(--ember); color: var(--ember); }
+    .contact-btn.secondary:hover { background: var(--ember); color: #fff; transform: translateY(-2px); }
+    .contact-btn.fire {
+        background: linear-gradient(180deg, var(--flame-gold), var(--ember)); color: #1a0f08;
+        box-shadow: 0 6px 22px rgba(255,87,34,0.4);
+    }
+    .contact-btn.fire:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255,87,34,0.6); }
+
+    .registration-form {
+        background: var(--char3); border: 1px solid var(--border); border-radius: 12px; padding: 2rem;
+    }
+    .registration-form h3 {
+        font-family: 'Oswald', sans-serif; font-size: 1.9rem; font-weight: 700;
+        text-transform: uppercase; text-align: center; margin-bottom: 0.5rem;
+    }
+    .registration-form .form-subtitle {
+        text-align: center; color: var(--smoke); font-size: 0.95rem; margin-bottom: 1.75rem;
+    }
+    .registration-form .form-subtitle a { color: var(--ember); }
+    .form-group { margin-bottom: 1rem; }
+    .form-group input {
+        width: 100%; padding: 1rem 1.1rem; font-size: 1rem;
+        font-family: 'Source Sans 3', sans-serif;
+        background: var(--char); color: #fff;
+        border: 1px solid var(--border); border-radius: 8px; outline: none;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-group input::placeholder { color: var(--smoke); text-transform: uppercase; letter-spacing: 0.5px; font-size: 0.9rem; }
+    .form-group input:focus { border-color: var(--ember); box-shadow: 0 0 0 3px rgba(255,87,34,0.18); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-row .form-group { margin-bottom: 0; }
+    .submit-btn {
+        display: block; width: 100%; max-width: 320px; margin: 1.75rem auto 0;
+        padding: 1.05rem 2rem; font-family: 'Oswald', sans-serif; font-size: 1.2rem; font-weight: 700;
+        text-transform: uppercase; letter-spacing: 1px; color: #1a0f08; cursor: pointer;
+        background: linear-gradient(180deg, var(--flame-yellow), var(--flame-gold) 50%, var(--ember) 100%);
+        border: none; border-radius: 999px;
+        box-shadow: 0 8px 26px rgba(255,87,34,0.45); transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 34px rgba(255,87,34,0.65); }
+
+    /* ---------- DEPOSIT ---------- */
+    .deposit-lead { color: var(--ash); margin-bottom: 1.5rem; max-width: 640px; }
+    .payment-methods { display: flex; flex-wrap: wrap; gap: 0.85rem; }
+    .payment-badge {
+        background: var(--char2); border: 1px solid var(--border); border-radius: 999px;
+        padding: 0.65rem 1.4rem; font-size: 0.9rem; font-weight: 600; color: var(--ash);
+        text-decoration: none; transition: all 0.2s; letter-spacing: 0.3px;
+    }
+    .payment-badge:hover {
+        border-color: var(--ember); color: #fff;
+        background: linear-gradient(180deg, rgba(255,87,34,0.18), rgba(255,87,34,0.06));
+        box-shadow: 0 4px 16px rgba(255,87,34,0.25); transform: translateY(-2px);
+    }
+    .deposit-cta { margin-top: 1.75rem; }
+
+    /* ---------- BYOB ---------- */
+    .byob-section {
+        background:
+            linear-gradient(180deg, rgba(255,87,34,0.06), rgba(255,87,34,0) 40%),
+            var(--char2);
+        border: 1px solid var(--ember); border-radius: 14px; padding: 2.5rem;
+        box-shadow: 0 0 40px rgba(255,87,34,0.12) inset;
+    }
+    .byob-section h3 {
+        font-family: 'Oswald', sans-serif; font-size: 1.6rem; font-weight: 700;
+        text-transform: uppercase; margin-bottom: 1rem;
+    }
+    .byob-section p { color: var(--ash); margin-bottom: 1rem; }
+    .byob-section ul { color: var(--smoke); margin: 0 0 1.5rem 1.25rem; }
+    .byob-section li { margin-bottom: 0.4rem; }
+
+    /* ---------- FOOTER ---------- */
+    footer {
+        position: relative; z-index: 1;
+        border-top: 1px solid var(--border); background: var(--char2);
+        text-align: center; padding: 2.5rem 2rem; margin-top: 2rem;
+    }
+    footer .foot-logo {
+        font-family: 'Oswald', sans-serif; font-size: 1.2rem; font-weight: 700;
+        text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;
+    }
+    footer p { color: var(--smoke); font-size: 0.875rem; }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 768px) {
+        .nav-container { flex-direction: column; text-align: center; }
+        .nav-links { justify-content: center; gap: 1.1rem; }
+        .hero { padding: 4rem 1.5rem 3.5rem; }
+        section { padding: 3rem 1.5rem; }
+        .form-row { grid-template-columns: 1fr; }
+        .register-shell, .byob-section { padding: 1.75rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .ember { display: none; }
+        .hero h1, .hero-bonus, .logo .flame-dot { animation: none; }
+        html { scroll-behavior: auto; }
+    }
+</style>
+</head>
+<body>
+
+<div class="ember-field" id="emberField"></div>
+
+<nav>
+    <div class="nav-container">
+        <a href="#top" class="logo"><span class="flame-dot"></span><span class="fire-text">Flaming Hot</span></a>
+        <ul class="nav-links">
+            <li><a href="#games">Games</a></li>
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#register">Register</a></li>
+            <li><a href="#deposit">Deposit</a></li>
+            <li><a href="#byob">BYOB</a></li>
+        </ul>
+    </div>
+</nav>
+
+<header class="hero" id="top">
+    <div class="hero-inner">
+        <div class="hero-eyebrow">Sweepstakes Gaming</div>
+        <h1 class="fire-text">Flaming Hot<br>Sweepstakes</h1>
+        <div class="hero-tag">Pay<span>.</span> Play<span>.</span> Win<span>.</span></div>
+        <a href="https://app.tierlock.com/ADc9EenL" class="hero-bonus" target="_blank"><span class="spark">🔥</span> $10 New Player Sign-Up Bonus</a>
+    </div>
+</header>
+
+<section id="games">
+    <div class="section-head">
+        <span class="section-eyebrow">Pick Your Heat</span>
+        <h2 class="section-title fire-text">Our Games</h2>
+    </div>
+    <div class="games-grid">
+
+        <div class="game-card">
+            <div class="game-image"><img src="images/fire-kirin.jpg" alt="Fire Kirin"></div>
+            <div class="game-info">
+                <h3>Fire Kirin</h3>
+                <a href="http://start.firekirin.xyz:8580/index.html" target="_blank">Play Now <span class="arrow">→</span></a>
+            </div>
+        </div>
+
+        <div class="game-card">
+            <div class="game-image"><img src="images/flaming-hot.png" alt="Flaming Hot"></div>
+            <div class="game-info">
+                <h3>Flaming Hot</h3>
+                <a href="https://www.flaming-hot.mobi/" target="_blank">Play Now <span class="arrow">→</span></a>
+            </div>
+        </div>
+
+        <div class="game-card">
+            <div class="game-image"><img src="images/dragon-fire.png" alt="FH Dragon Fire"></div>
+            <div class="game-info">
+                <h3>FH Dragon Fire</h3>
+                <a href="http://fhdragonfire.xyz:8580/index.html" target="_blank">Play Now <span class="arrow">→</span></a>
+            </div>
+        </div>
+
+        <div class="game-card">
+            <div class="game-image"><img src="images/tai-chi-master.jpg" alt="Tai Chi Master"></div>
+            <div class="game-info">
+                <h3>Tai Chi Master</h3>
+                <a href="https://www.taichimaster777.com/" target="_blank">Play Now <span class="arrow">→</span></a>
+            </div>
+        </div>
+
+        <div class="game-card">
+            <div class="game-image"><img src="images/golden-dragon.png" alt="Golden Dragon"></div>
+            <div class="game-info">
+                <h3>Golden Dragon</h3>
+                <a href="http://playgd.mobi" target="_blank">Play Now <span class="arrow">→</span></a>
+            </div>
+        </div>
+
+        <div class="game-card">
+            <div class="game-image"><img src="images/dragon-game-777.png" alt="Dragon Game 777"></div>
+            <div class="game-info">
+                <h3>Dragon Game 777</h3>
+                <a href="https://www.dragongame777.com/" target="_blank">Play Now <span class="arrow">→</span></a>
+            </div>
+        </div>
+
+        <div class="game-card">
+            <div class="game-image"><img src="images/magic-time.png" alt="Magic Time"></div>
+            <div class="game-info">
+                <h3>Magic Time</h3>
+                <a href="https://download.mymagictime.com/" target="_blank">Play Now <span class="arrow">→</span></a>
+            </div>
+        </div>
+
+        <div class="game-card">
+            <div class="game-image"><img src="images/vblink.png" alt="VBLink"></div>
+            <div class="game-info">
+                <h3>VBLink</h3>
+                <a href="https://www.vblink777.club/" target="_blank">Play Now <span class="arrow">→</span></a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section id="how-it-works">
+    <div class="section-head">
+        <span class="section-eyebrow">Four Steps</span>
+        <h2 class="section-title fire-text">How It Works</h2>
+    </div>
+    <div class="steps">
+        <div class="step">
+            <div class="step-number fire-text">01</div>
+            <h3>Choose Your Game</h3>
+            <p>Browse our selection and pick the game you want to play.</p>
+        </div>
+        <div class="step">
+            <div class="step-number fire-text">02</div>
+            <h3>Register</h3>
+            <p>Fill out the form below or contact us via Telegram or Facebook.</p>
+        </div>
+        <div class="step">
+            <div class="step-number fire-text">03</div>
+            <h3>Make a Deposit</h3>
+            <p>Fund your account using Cash App, Venmo, Zelle, or other methods.</p>
+        </div>
+        <div class="step">
+            <div class="step-number fire-text">04</div>
+            <h3>Play &amp; Win</h3>
+            <p>Enter your credentials and start playing. Cash out your winnings anytime.</p>
+        </div>
+    </div>
+</section>
+
+<section id="register">
+    <div class="section-head">
+        <span class="section-eyebrow">Get In The Game</span>
+        <h2 class="section-title fire-text">Register</h2>
+    </div>
+    <div class="register-shell">
+        <p class="lead">Ready to play? Contact us to set up your gamer account. New players get a <strong>$10 bonus</strong> on their first deposit of $20 or more.</p>
+        <div class="contact-options">
+            <a href="https://t.me/+prV21nLzQCQwZjJh" class="contact-btn telegram" target="_blank">
+                <img src="images/telegram.jpg" alt="Telegram"> Join Telegram
+            </a>
+            <a href="https://www.facebook.com/share/1B1R86uD17/?mibextid=wwXIfr" class="contact-btn secondary" target="_blank">Message on Facebook</a>
+        </div>
+
+        <div class="registration-form">
+            <h3 class="fire-text">New Player Registration</h3>
+            <p class="form-subtitle">
+                To play, contact us via <a href="https://t.me/+prV21nLzQCQwZjJh" target="_blank">Telegram</a> or <a href="https://www.facebook.com/share/1B1R86uD17/?mibextid=wwXIfr" target="_blank">Facebook</a>.<br>
+                To register with us, please fill out the form below.
+            </p>
+            <form action="https://formsubmit.co/Flaminghotsweep@gmail.com" method="POST">
+                <input type="hidden" name="_subject" value="New Player Registration - Flaming Hot Sweepstakes">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_template" value="table">
+                <div class="form-group"><input type="text" name="name" placeholder="Name" required></div>
+                <div class="form-group"><input type="email" name="email" placeholder="Email Address" required></div>
+                <div class="form-row">
+                    <div class="form-group"><input type="tel" name="phone" placeholder="Phone" required></div>
+                    <div class="form-group"><input type="date" name="birthday" placeholder="Birthday" required></div>
+                </div>
+                <button type="submit" class="submit-btn">Continue</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<section id="deposit">
+    <div class="section-head">
+        <span class="section-eyebrow">Fund Up</span>
+        <h2 class="section-title fire-text">Deposit</h2>
+    </div>
+    <p class="deposit-lead">We accept deposits via the following payment methods. Tap any option to pay securely through Tierlock, or contact us on Telegram to get started.</p>
+    <div class="payment-methods">
+        <a href="https://app.tierlock.com/ADc9EenL" class="payment-badge" target="_blank">Cash App</a>
+        <a href="https://app.tierlock.com/ADc9EenL" class="payment-badge" target="_blank">Venmo</a>
+        <a href="https://app.tierlock.com/ADc9EenL" class="payment-badge" target="_blank">Zelle</a>
+        <a href="https://app.tierlock.com/ADc9EenL" class="payment-badge" target="_blank">Chime</a>
+        <a href="https://app.tierlock.com/ADc9EenL" class="payment-badge" target="_blank">Apple Pay</a>
+        <a href="https://app.tierlock.com/ADc9EenL" class="payment-badge" target="_blank">Google Pay</a>
+    </div>
+    <div class="deposit-cta">
+        <a href="https://app.tierlock.com/ADc9EenL" class="contact-btn fire" target="_blank">🔥 Pay with Tierlock</a>
+    </div>
+</section>
+
+<section id="byob">
+    <div class="section-head">
+        <span class="section-eyebrow">Opportunity</span>
+        <h2 class="section-title fire-text">Be Your Own Boss</h2>
+    </div>
+    <div class="byob-section">
+        <h3 class="fire-text">Become a Sub-Distributor</h3>
+        <p>Want to run your own sweepstakes business? We offer distributor opportunities with our game systems:</p>
+        <ul>
+            <li>FH Dragon Fire (Fire Kirin Remix)</li>
+            <li>Flaming Hot (V Power Remix)</li>
+            <li>Dragon King</li>
+        </ul>
+        <p>Work from home. Set your own hours. Build your own customer base.</p>
+        <a href="https://t.me/+prV21nLzQCQwZjJh" class="contact-btn telegram" target="_blank">
+            <img src="images/telegram.jpg" alt="Telegram"> Contact Us for Details
+        </a>
+    </div>
+</section>
+
+<footer>
+    <div class="foot-logo fire-text">Flaming Hot Sweepstakes</div>
+    <p>&copy; 2025 Flaming Hot Sweepstakes. All rights reserved.</p>
+</footer>
+
+<script>
+    // Generate rising embers in the hero
+    (function () {
+        const field = document.getElementById('emberField');
+        if (!field) return;
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduce) return;
+        const COUNT = 42;
+        for (let i = 0; i < COUNT; i++) {
+            const e = document.createElement('span');
+            e.className = 'ember';
+            const left = Math.random() * 100;
+            const size = 2 + Math.random() * 4;
+            const dur = 5 + Math.random() * 7;
+            const delay = Math.random() * 8;
+            const drift = (Math.random() * 80 - 40).toFixed(0) + 'px';
+            e.style.left = left + '%';
+            e.style.width = size + 'px';
+            e.style.height = size + 'px';
+            e.style.animationDuration = dur + 's';
+            e.style.animationDelay = delay + 's';
+            e.style.setProperty('--drift', drift);
+            if (Math.random() > 0.5) e.style.background = 'var(--ember-hot)';
+            field.appendChild(e);
+        }
+    })();
+</script>
+</body>
+</html>
